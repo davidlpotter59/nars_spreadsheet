@@ -11,7 +11,6 @@ today = datetime.date.today()
 first = today.replace(day=1)
 lastMonth = first - datetime.timedelta(days=1)
 accdate = lastMonth.strftime("%Y%m%d")
-print(accdate)
 
 xlsx_file = accdate + "_" + datestr+"_nars_spreadsheet.xlsx"
 input_file = "nars.csv"
