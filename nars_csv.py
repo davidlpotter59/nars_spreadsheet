@@ -13,7 +13,7 @@ lastMonth = first - datetime.timedelta(days=1)
 accdate = lastMonth.strftime("%Y%m%d")
 print(accdate)
 
-xlsx_file = accdate + "_" + datestr+"_nars_panda.xlsx"
+xlsx_file = accdate + "_" + datestr+"_nars_spreadsheet.xlsx"
 input_file = "nars.csv"
 
 if os.path.exists(xlsx_file):
