@@ -20,9 +20,14 @@ if os.path.exists(xlsx_file):
     
 nars_df = pd.read_csv(input_file, sep='|', header=0, encoding = "ISO-8859-1")
 
-#  fixing bad eff date and exp date
-nars_df['eff_date'] = pd.to_datetime(nars_df['eff_date'], format = "%m/%d/%Y", errors="coerce")
-nars_df['exp_date'] = pd.to_datetime(nars_df['exp_date'], format = "%m/%d/%Y", errors="coerce")
+#  fixing bad dates
+nars_df['eff_date'] = pd.to_datetime(nars_df['eff_date'],  errors="coerce")
+nars_df['exp_date'] = pd.to_datetime(nars_df['exp_date'],  errors="coerce")
+nars_df['date_opened'] = pd.to_datetime(nars_df['date_opened'],  errors="coerce")
+nars_df['date_closed'] = pd.to_datetime(nars_df['date_closed'],  errors="coerce")
+nars_df['acc_date'] = pd.to_datetime(nars_df['acc_date'],  errors="coerce")
+nars_df['date_reported'] = pd.to_datetime(nars_df['date_reported'],  errors="coerce")
+nars_df['date_reopened'] = pd.to_datetime(nars_df['date_reopened'],  errors="coerce")
 
 # had to search for DELOS using the .contains since the client location contains a space 
 delos_df = nars_df[nars_df['client_location'].str.contains("104")] 
@@ -31,7 +36,9 @@ axis_df = nars_df[nars_df.client_location=="AX1"]
 gsn_df = nars_df[nars_df.client_location=="SC2"]
 bad_df = nars_df.query('eff_date == "NaT"' or 'exp_date == "NaT"')
 
-with pd.ExcelWriter(xlsx_file) as writer:  
+with pd.ExcelWriter(xlsx_file, 
+                    date_format='yyyy-mm-dd', 
+                    datetime_format='yyyy-mm-dd') as writer:  
     nars_df.to_excel(writer, sheet_name="All - Detail")
     delos_df.to_excel(writer, sheet_name='DELOS - Detail')
     starr_df.to_excel(writer, sheet_name='STARR - Detail')
