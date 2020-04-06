@@ -36,6 +36,14 @@ axis_df = nars_df[nars_df.client_location=="AX1"]
 gsn_df = nars_df[nars_df.client_location=="SC2"]
 bad_df = nars_df.query('eff_date == "NaT"' or 'exp_date == "NaT"')
 
+# set the index to the claim number so the spreadsheet does not show the generated index number
+nars_df.set_index(['claim_nbr'], inplace=True)
+starr_df.set_index(['claim_nbr'], inplace=True)
+axis_df.set_index(['claim_nbr'], inplace=True)
+gsn_df.set_index(['claim_nbr'], inplace=True)
+bad_df.set_index(['claim_nbr'], inplace=True)
+
+
 with pd.ExcelWriter(xlsx_file, 
                     date_format='yyyy-mm-dd', 
                     datetime_format='yyyy-mm-dd') as writer:  
